@@ -8,3 +8,7 @@
     overflow-y: auto;
     max-height: 420px;
 }
+
+.validation-error {
+    color: #f49b9b;
+}

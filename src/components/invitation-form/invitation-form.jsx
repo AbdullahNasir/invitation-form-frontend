@@ -12,13 +12,12 @@ class InvitationForm extends Component {
   state = {
     invitationType: this.invitationTypes.SINGLE,
     inputCount: 3,
-    emails: ["", "", ""],
-    isValidForm: true
+    emails: ["", "", ""]
   };
 
   // should be moved to a util file
   validateEmail(email) {
-    const re = /^\S+@\S+$/;
+    const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     return re.test(email);
   }
 
@@ -69,12 +68,21 @@ class InvitationForm extends Component {
         >
           {this.state.emails.join(",")}
         </textarea>
+        {!this.validateForm() && (
+          <p className="validation-error">
+            Make sure you’ve put valid email addresses
+          </p>
+        )}
       </React.Fragment>
     );
   }
 
   handleBulkEmailChange = event => {
-    const emails = event.target.value.split(",");
+    let emails = event.target.value;
+    emails = emails
+      .replace(/;|\t|\n/g, ",")
+      .replace(/ /g, "")
+      .split(",");
     this.setState({
       emails
     });
@@ -137,8 +145,13 @@ class InvitationForm extends Component {
 
   sendInvites = async event => {
     let emails = this.state.emails;
+
     if (this.state.invitationType === this.invitationTypes.SINGLE) {
       emails = this.removeEmptyInputFields();
+    }
+
+    if (this.state.invitationType === this.invitationTypes.BULK) {
+      emails = emails.filter(email => email.length > 0);
     }
 
     let message = "";
