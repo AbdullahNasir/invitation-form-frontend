@@ -143,6 +143,7 @@ class InvitationForm extends Component {
     try {
       const response = await axios.post(
         `https://invitation-backend.herokuapp.com/api/invitations/bulk`,
+        // `http://localhost:4000/api/invitations/bulk`,
         {
           emails
         }
@@ -191,7 +192,7 @@ class InvitationForm extends Component {
       <React.Fragment>
         <div className="row">
           <div className="col-6 form-container">
-            <form>{this.renderForm()}</form>
+            <form className="form-with-scroll">{this.renderForm()}</form>
             <div className="mb-2">
               <a href="#" onClick={this.addAnotherInputField}>
                 add another
