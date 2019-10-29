@@ -107,10 +107,12 @@ class InvitationForm extends Component {
   };
 
   switchToBulk = event => {
+    let emails = this.state.emails.filter(email => email.length > 0);
+
     this.setState({
       invitationType: this.invitationTypes.BULK,
       isValidForm: false,
-      emails: []
+      emails: emails
     });
   };
 
