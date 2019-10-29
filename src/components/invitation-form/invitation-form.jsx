@@ -142,7 +142,7 @@ class InvitationForm extends Component {
     let message = "";
     try {
       const response = await axios.post(
-        `http://localhost:4000/api/invitations/bulk`,
+        `https://invitation-backend.herokuapp.com/api/invitations/bulk`,
         {
           emails
         }
